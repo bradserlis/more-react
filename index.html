@@ -9,31 +9,14 @@
 <div id="root"></div>
 <script type="text/babel">
 
-    const NowEating = props => <h1>{props.meal} </h1>
-
-    class Menu extends React.Component {
-        state = {
-            meal: 'spaghetti'
-        }
-
-        addSideDish = () => {
-            this.setState(previousState => {
-                return {meal: `${previousState.meal} & Sauce`}
-            })
-        }
-
-        render(){
-            return(
-                <div>
-                <NowEating meal={this.state.meal} />
-                {(this.state.meal === 'spaghetti' ? <button onClick={this.addSideDish}> Add Sauce</button> : null)}
-                </div>
-            )
-        }
-    }
+    const Display = ( {ifTruthy=true, children} ) => 
+        (ifTruthy) ? React.Children.only(children) : null
+        const age = 18;
 
     ReactDOM.render(
-        <Menu />,
+        <Display ifTruthy={age >= 18}>
+        <h1> You can vote</h1>
+        </Display>,
         document.getElementById('root')
     )
 
