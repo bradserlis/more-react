@@ -12,11 +12,8 @@
     const NowEating = props => <h1>{props.meal} </h1>
 
     class Menu extends React.Component {
-        constructor(props){
-            super(props)
-            this.state = {
-                meal: 'spaghetti'
-            }
+        state = {
+            meal: 'spaghetti'
         }
 
         addSideDish = () => {
