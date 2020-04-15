@@ -9,73 +9,58 @@
 <div id="root"></div>
 <script type="text/babel">
 
-    const Context = React.createContext();
-
-    class Provider extends React.Component {
-        state={
-            name:'Snowtooth Mountain',
-            status: 'Open'
-        }
-
-        render() {
-            return(
-                <Context.Provider value={{
-                    changeStatus: () => this.setState({
-                        status: "Closed"
-                    }),
-                    state: this.state
-                    }}>
-                    {this.props.children}
-                </Context.Provider>
-            )
-        }
-    }
-    
-    const Trail = props => (
-        <div>
-            <Context.Consumer>
-                {(context)=> (
+    const DataComponent = (ComposedComponent, url) => 
+        class DataComponent extends React.Component{
+            constructor(props){
+                super(props)
+                this.state={
+                    data: [],
+                    loading: false,
+                    loaded: false
+                }
+            }
+            componentDidMount(){
+                this.setState({
+                    loading: true
+                })
+                fetch(url).then(response => response.json()).then(data => 
+                this.setState({
+                    loaded: true,
+                    loading: false,
+                    data
+                })
+                )
+            }
+            render(){
+                return(
                     <div>
-                        <p>
-                            This is the context: {context.state.name}
-                        </p>
-                        <p>
-                            The resort is {context.state.status}
-                        </p>
-                        <button
-                        onClick={context.changeStatus}
-                        >
-                        Close Resort
-                        </button>
+                        {this.state.loaded ? <ComposedComponent {...this.state} {...this.props} />
+                        : <div>LOADING...</div> }
                     </div>
-                )}
-            </Context.Consumer>
-        </div>
-    )
-
-    const Lift = props => (
-        <div>
-            <Trail/>
-        </div>
-    )
-
-    class Resort extends React.Component{
-        
-
-        render(){
-            return(
-                <Provider>
-                    <div>
-                        <Lift />
-                    </div>
-                </Provider>
-            )
+                )
+            }
         }
-    }
+
+    const PeopleList = ({data}) => 
+    <ol>
+        {data.results.map((person, i) => {
+            const {first, last} = person.name
+            return (
+                <li key={i}>
+                    {first} {last}
+                </li>
+            )
+        })}
+    </ol>
+
+    const RandomMeUsers = DataComponent(
+        PeopleList,
+        "https://randomuser.me/api?results=10" 
+        )
 
 
     ReactDOM.render(
-        <Resort />,
+        <RandomMeUsers />,
         document.getElementById('root')
     )
 
