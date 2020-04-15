@@ -13,12 +13,18 @@
 
     class Provider extends React.Component {
         state={
-            name:'Snowtooth Mountain'
+            name:'Snowtooth Mountain',
+            status: 'Open'
         }
 
         render() {
             return(
-                <Context.Provider value={{state: this.state}}>
+                <Context.Provider value={{
+                    changeStatus: () => this.setState({
+                        status: "Closed"
+                    }),
+                    state: this.state
+                    }}>
                     {this.props.children}
                 </Context.Provider>
             )
@@ -29,9 +35,19 @@
         <div>
             <Context.Consumer>
                 {(context)=> (
-                    <p>
-                        This is the context: {context.state.name}
-                    </p>
+                    <div>
+                        <p>
+                            This is the context: {context.state.name}
+                        </p>
+                        <p>
+                            The resort is {context.state.status}
+                        </p>
+                        <button
+                        onClick={context.changeStatus}
+                        >
+                        Close Resort
+                        </button>
+                    </div>
                 )}
             </Context.Consumer>
         </div>
