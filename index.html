@@ -48,6 +48,30 @@
         document.getElementById('root')
     )
 
+    const NavItems = () => 
+    <>
+    <a href='/'> Home </a>
+    <a href='/about'> About </a>
+    <a href='/services'> Services </a>
+    <a href='/contact'> Contact </a>
+    </>
+
+    
+
+    const App = () => 
+    <header>
+    <nav>
+        <NavItems />
+    </nav>
+    </header>
+
+    ReactDOM.render(
+        <App />,
+        document.getElementById('root')
+    )
+
+    
+
     </script>
 
 </html>
