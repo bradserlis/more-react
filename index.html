@@ -9,44 +9,10 @@
 <div id="root"></div>
 <script type="text/babel">
 
-    class EncouragementForm extends React.Component {
-
-        state = {
-            message: ''
-        }
-
-        handleChange = (e) => {
-            this.setState({
-                message: e.target.value
-            })
-        }
-
-
-        handleSubmit = (e) => {
-            e.preventDefault();
-            alert(this.state.message);
-
-        }
-
-        render(){
-            return(
-                <form onSubmit={this.handleSubmit}>
-                <label>
-                    Send an encouraging message
-                    <input  type='text' value={this.state.message} onChange={this.handleChange} />
-                </label>
-                <button>
-                    Submit
-                </button>
-                </form>
-            )
-        }
-    }
-
-    ReactDOM.render(
-        <EncouragementForm/>,
-        document.getElementById('root')
-    )
+    const skiDictionary = [
+        {id: 1, name: "Send", definition: "To throw one's body off of a cliff or rock"},
+        {id: 2, name: "Chowder", defininition: "Snow or powder that has been skied"}
+    ]
 
     const NavItems = () => 
     <>
@@ -58,15 +24,22 @@
 
     
 
-    const App = () => 
-    <header>
-    <nav>
-        <NavItems />
-    </nav>
-    </header>
+    const App = (props) => {
+        return (
+            <dl>
+                {props.skiDictionary.map(term => (
+                    <React.Fragment key={term.id}>
+                    <dt>{term.name}</dt>
+                    <dd>{term.definition}</dd>
+                    </React.Fragment>
+                ))}
+            </dl>
+        )
+    }
+    
 
     ReactDOM.render(
-        <App />,
+        <App skiDictionary={skiDictionary}/>,
         document.getElementById('root')
     )
 
