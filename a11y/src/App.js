@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {Component } from 'react';
 import './App.css';
 
-function App() {
-  return (
+class App extends Component {
+  render(){
+    return (
      <div>
        <a href='#home'>Home</a>
        <img src='/img/is-an-image.jpg' alt=''/>
      </div> 
   )
+  }
 }
 
 export default App;
